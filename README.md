@@ -1,0 +1,2 @@
+# bardd
+Meddalwedd Cynganeddol

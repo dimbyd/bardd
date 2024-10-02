@@ -1,8 +1,8 @@
 # custom
 .code-workspace
-
-logs/
 cronfa/
+*.log
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

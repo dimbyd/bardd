@@ -13,12 +13,14 @@ nodau = {
     'diwedd_yrorffwysfa = None,
     'diwedd_ybrifodl = None,
 }
-geiriau = [Gair, Gair, Gair]
-Gair = [Sillaf, Sillaf, Sillaf]
-Sillaf = [Cyfres, Cyfres, Cyfres]
-Cyfres = [Nod, Nod, Nod]
 
-Y llwybrau gynt lle bu'r gan
+Dyma'r hierarchaeth:
+    geiriau = [Gair, Gair, Gair]
+    Gair = [Sillaf, Sillaf, Sillaf]
+    Sillaf = [Cyfres, Cyfres, Cyfres]
+    Cyfres = [Nod, Nod, Nod]
+
+"Y llwybrau gynt lle bu'r gan"
 
 .y.|ll.wy.br|.au.|g.y.nt
 ll.e.|b.u'.r|g.a.n
@@ -45,7 +47,7 @@ Cyfuniadau trychben
 Mae cytsain olaf y rhan gyntaf yn symud ar draws y toriad (tua'r dde)
 ac yn cysylltu gyda chytseiniaid blaen yr ail ran
 
-NB croes-o-gyswllt: mae posib neidio dros llafariaid terfynnol
+Croes-o-gyswllt: mae posib neidio dros llafariaid terfynnol
 e.e. daw geiriau duw | o'i gaer deg
 
 Cyfuniadau cysylltben
@@ -98,6 +100,7 @@ def cyfatebiaeth(nod1, nod2):
         return True
     else:
         return False
+
 
 def cysefeillio(x_nodau, y_nodau):
     """
@@ -169,6 +172,7 @@ def cysefeillio(x_nodau, y_nodau):
     cytseiniaid_cyfatebol.reverse()
     return (cytseiniaid_cyfatebol, x_nodau, y_nodau, hysbys)
 
+
 def aceniad(x_geiriau, y_geiriau):
     """
     Dosbarthu dwy gyfres geiriau yn ol aceniad.
@@ -186,6 +190,7 @@ def aceniad(x_geiriau, y_geiriau):
 
     else:
         return "CDI"  # cytbwys ddiacen
+
 
 def traeannu(geiriau):
     """
@@ -241,6 +246,7 @@ def traeannu(geiriau):
 
     # diwedd
     return blaen, canol, diwedd
+
 
 def prawf_cytseinedd_sylfaenol(x_geiriau, y_geiriau):
     """
@@ -378,6 +384,7 @@ def prawf_cytseinedd_sylfaenol(x_geiriau, y_geiriau):
     # print('dad = ', dad)
 
     return dad
+
 
 def prawf_cytseinedd(x_geiriau, y_geiriau):
     """
@@ -534,11 +541,10 @@ def prawf_cytseinedd(x_geiriau, y_geiriau):
 
     return dad
 
+
 def dosbarth_cytseinedd(cytseiniaid_cyfatebol, x_blaen, y_blaen):
     """
-    Dosbarthu
-    Mewnbwn:
-    Allbwn:
+    Dosbarthu'r cytseinedd e.g. CRO, COG, TRA ayb
     """
 
     dad = Dadansoddiad()

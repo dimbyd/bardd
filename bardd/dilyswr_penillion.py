@@ -1,5 +1,7 @@
-# profwr.py
+# dilyswr_penillion.py
 '''
+Dulliau ar gyfer darganfod mesur barddonol mewn pennill
+
 Cywydd deuair hirion:   CDH = [CC7,CC7,...]         
 Cywydd deuair fyrion:   CDF = [CC4,CC4,...]         
 Englyn unodl union:     EUU = [TOB,CWC]             # pob llinell yn odli
@@ -114,15 +116,15 @@ def prawf_englyn(pennill):
     if not prawf_odl(llinellau[0], llinellau[1]).dosbarth in ['OGY', 'OLA']:
         dad.hysbys.append('EUU: dim odl yn y baladr')
         return dad
-    
+
     elif not prawf_odl(llinellau[2], llinellau[3]).dosbarth in ['OGY', 'OLA']:
         dad.hysbys.append('EUU: dim odl yn yr esgyll')
         return dad
-    
+
     elif not prawf_odl(llinellau[1], llinellau[3]).dosbarth in ['OGY', 'OLA']:
         dad.hysbys.append("EUU: dim odl rhwng y paladr a'r esgyll")
         return dad
-    
+
     # llwyddiant
     dad.dosbarth = 'EUU'
     dad.cwpledi = [dad_paladr, dad_esgyll]
@@ -283,4 +285,3 @@ if __name__ == '__main__':
     # print(xtree)
     # s = etree.tostring(xtree, pretty_print=True)
     # print(s)
-

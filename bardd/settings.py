@@ -6,8 +6,6 @@ SRC_ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_ROOT = os.path.join(PROJECT_ROOT, 'cronfa')
 LOG_ROOT = os.path.join(PROJECT_ROOT, 'logs')
 
-#-----------------------------------------
-
 LOG_FILE_NAME = os.path.join(LOG_ROOT, 'bardd.log')
 
 ADMINS = (

@@ -7,19 +7,18 @@ from bardd.base import TreeNode
 from bardd.nod import Nod
 
 import logging
-
 log = logging.getLogger(__name__)
 
 
 class Cyfres(TreeNode):
     """
-    Dilyniant o nodau o'r un dosbarth (llafariaid neu cytseiniaid)
-    Gall atalnodau ymddangos yn yn ddau fath o restr
+    Cyfres yw dilyniant o nodau o'r un dosbarth (llafariaid neu cytseiniaid)
+    Gall atalnodau ymddangos yn yn ddau fath
     """
 
     def __init__(self, s="", parent=None):
         """
-        Creu cyfres o linyn elfennol
+        Creu cyfres nodau o linyn elfennol
         """
         TreeNode.__init__(self, parent=parent)
 
@@ -27,11 +26,11 @@ class Cyfres(TreeNode):
         if not s:
             self.children = []
 
-        # creu cyfres o restr nodau
+        # creu cyfres allan o restr nodau
         elif type(s) in (list, tuple) and all([type(a) is Nod for a in s]):
             self.children = s
 
-        # creu cyfres o gyfres
+        # creu cyfres allan o gyfres
         elif type(s) is Cyfres:
             self.children = s.children
 
@@ -91,7 +90,7 @@ class Cyfres(TreeNode):
             and len(self.children) == len(other.children)
             and all([a.text == b.text for a, b in zip(self.children, other.children)])
         )
-    
+
     def __len__(self):
         return len(self.children)
 
@@ -106,25 +105,14 @@ class Cyfres(TreeNode):
     def __repr__(self):
         return "".join([nod.text for nod in self.children])
 
-    def sain(self):
-        return ''.join([nod.sain for nod in self.children])
-
     def __setitem__(self, idx, data):
         self.children[idx] = data
 
     def __getitem__(self, idx):
         return self.children[idx]
 
-    # def __iter__(self):
-    #     self.idx = 0
-    #     return self
-
-    # def __next__(self):
-    #     idx = self.idx
-    #     self.idx += 1
-    #     return self.children[idx]
-
-    # __call__ = __next__
+    def sain(self):
+        return ''.join([nod.sain for nod in self.children])
 
     def gwag(self):
         return not len(self.children) > 0
@@ -155,18 +143,10 @@ class Cyfres(TreeNode):
             nodau = [nod for nod in self.children if nod.is_cytsain()]
         return Cyfres(nodau)
 
-    # def llafariaid(self):
-    #     return Cyfres([nod for nod in self.children if nod.is_llafariad()])
-
-    # def cytseiniaid(self):
-    #     return Cyfres([nod for nod in self.children if nod.is_cytsain()])
-
 
 # ------------------------------------------------
 # test
 def main():
-
-    # from lxml import etree
 
     s = 'anifeiliaid'
     s = 'cystrawen'

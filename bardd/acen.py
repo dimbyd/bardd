@@ -2,16 +2,15 @@
 '''
 Dulliau ar gyfer darganfod dosbarth aceniad.
 
-mewnbwn: dau wrthrych `Gair` (yr orffwysfa a'r brifodl)
+Mewnbwn: dau wrthrych `Gair` (yr orffwysfa a'r brifodl)
 
-allbwn: llythrenw dosbarth aceniad
-	'CAC': cytbwys acennog
-	'CDI': cytbwys ddiacen
-	'ADI': angytbwys ddisgynedig
-	'ADY': angytbwys ddyrchafedig
+Allbwn: llythrenw dosbarth aceniad
+    'CAC': cytbwys acennog
+    'CDI': cytbwys ddiacen
+    'ADI': angytbwys ddisgynedig
+    'ADY': angytbwys ddyrchafedig
 '''
 
-from bardd.gair import Gair
 
 def aceniad(g1, g2):
     '''
@@ -26,6 +25,6 @@ def aceniad(g1, g2):
             return 'ADI'
     else:
         if g2.is_acennog():
-            return 'ADY'
+            return 'AAC'
         else:
             return 'CDI'

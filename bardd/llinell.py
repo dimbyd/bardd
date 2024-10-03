@@ -3,9 +3,10 @@
 from bardd.base import TreeNode
 from bardd.gair import Gair
 
+
 class Llinell(TreeNode):
     """
-    Dosbarth i ddarlunio llinell fel rhestr geiriau
+    Dosbarth i fynegi llinell fel rhestr geiriau
     """
 
     def __init__(self, s, awdur=None, parent=None):
@@ -39,6 +40,7 @@ class Llinell(TreeNode):
             return self.children[-1]
         return None
 
+    # allbwn
     def llinyn(self):
         return " ".join([str(gair) for gair in self.children])
 

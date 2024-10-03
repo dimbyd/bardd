@@ -19,16 +19,15 @@ from bardd.cysonion import (
     eithriadau,
 )
 
-deusain_ddeusill = eithriadau['deusain_ddeusill']
-
 import logging
-
 log = logging.getLogger(__name__)
+
+deusain_ddeusill = eithriadau['deusain_ddeusill']
 
 
 class Gair(TreeNode):
     """
-    Dosbarth i ddarlunio gair fel rhestr sillafau.
+    Dosbarth i fynegi gair fel rhestr sillafau.
     Base'n bosib gwneud rhai traswnewidiadau fan hyn, ond dim odlau cudd ayb.
     """
 

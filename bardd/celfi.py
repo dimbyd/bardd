@@ -1,6 +1,5 @@
 # celfi.py
 '''
-Celfi crefft
 1. odliadur (regex)
 2. cleciadur (regex)
 3. chwiliadur (regex)
@@ -8,12 +7,9 @@ Celfi crefft
 
 '''
 import re
-
 from bardd.settings import DATABASES
 from bardd.cysonion import llafariaid, cytseiniaid
-
 from bardd.cysonion import eithriadau
-
 from bardd.gair import Gair
 
 odlau_file = DATABASES['default']['ODLAU']    # json
@@ -21,6 +17,7 @@ geirfa_file = DATABASES['default']['GEIRFA']  # txt
 
 lluosill_acennog = eithriadau['lluosill_acennog']
 deusain_ddeusill = eithriadau['deusain_ddeusill']
+
 
 def rhestr_nodau(s):
     nodau = []
@@ -34,6 +31,7 @@ def rhestr_nodau(s):
             nodau.append(chars[idx])
         idx += 1
     return nodau
+
 
 def rhestr_clymau(s):
 
@@ -63,17 +61,21 @@ def rhestr_clymau(s):
 
     return clymau
 
+
 def nifer_sillafau(s):
     return int(len(rhestr_clymau(s)) / 2)
 
+
 def lluosill(s):
     return nifer_sillafau(s) > 1
+
 
 def acennog(s):
     # if nifer_sillafau(s) == 1 or s in geiriau_lluosill_acennog:
     if Gair(s).acennog() or s in lluosill_acennog:
         return True
     return False
+
 
 def traeannu(s):
     clymau = rhestr_clymau(s)
@@ -82,10 +84,12 @@ def traeannu(s):
     else:
         return (clymau[:-2], clymau[-2:], [])
 
+
 def cytbwys(s1, s2):
     if (acennog(s1) and acennog(s2)) or (not acennog(s1) and not acennog(s2)):
         return True
     return False
+
 
 def creu_patrwm_clec(s, cytbwys=True):
     '''
@@ -94,12 +98,12 @@ def creu_patrwm_clec(s, cytbwys=True):
 
     llaf = '|'.join(llafariaid)
     cyts = '|'.join(cytseiniaid)
-    
+
     b, c, d = traeannu(s)
-    
+
     vb = b[1::2] if b else []  # clymau llafariaid y blaen
     cb = b[::2] if b else []   # clymau cytseiniaid y blaen
-    
+
     # fflatio
     vb = [x for cwlwm in vb for x in cwlwm]
     cb = [x for cwlwm in cb for x in cwlwm]
@@ -192,10 +196,12 @@ def creu_patrwm_clec(s, cytbwys=True):
 
     return r''.join(p)
 
+
 def clec(p, s):
     if re.fullmatch(p, s):
         return True
     return False
+
 
 def cleciadur(s):
     '''
@@ -208,8 +214,8 @@ def cleciadur(s):
         # geirfa = [Gair(s2) for s2 in s1]
 
     # info
-    print('Geirfa:   {}'.format(len(geirfa)))
-    print('Gofyniad: {}'.format(s))
+    # print('Geirfa:   {}'.format(len(geirfa)))
+    # print('Gofyniad: {}'.format(s))
 
     # creu patrymau rhelaidd
     p_cytbwys = creu_patrwm_clec(s, cytbwys=True)
@@ -228,7 +234,10 @@ def cleciadur(s):
 
     return clecs
 
+
 def odliadur(s, odl_lusg=False, acennog_yn_unig=False):
+
+    # defnyddio odliadur RS am odlau syml
     if not odl_lusg:
         import json
         with open(odlau_file, "r") as infile:
@@ -239,32 +248,47 @@ def odliadur(s, odl_lusg=False, acennog_yn_unig=False):
                 odlau = [od for od in odlau if acennog(od)]
             return odlau if odlau else None
 
+    # defnyddio geiriau JGJ am odlau llusg
     import re
     with open(geirfa_file) as f:
-        s = f.read()
+        s0 = f.read()
     llaf = '|'.join(llafariaid)
     cyts = '|'.join(cytseiniaid)
     if odl_lusg:
         p = r'\b[a-z]*' + r'[' + cyts + r']+' + s + r'[' + llaf + r']+[' + cyts + ']*' + r'\b'
     else:
-        # p = r'\b[a-z]*' + r'[' + cyts + r']+' + qstr + r'\b'
         p = r'\b[a-z]*' + s + r'\b'
 
-    odlau = re.findall(p, s)
+    odlau = re.findall(p, s0)
     return odlau if odlau else None
+
 
 def main():
     s = 'cariad'
-    s = 'nant'
-    s = 'ffenest'
-    s = 'afon'
-    s = 'celfi'
-    clecs = cleciadur(s)
-    print(clecs)
+    # s = 'nant'
+    # s = 'ffenest'
+    # s = 'afon'
+    # s = 'corrach'
 
-    s = 'od'
+    print('YMHOLIAD: {}'.format(s))
+
+    clecs = cleciadur(s)
+    if clecs:
+        print('CLECS:\n' + ' '.join(clecs))
+
+    s = 'afiach'
+
+    odlau = odliadur(s)
+    if odlau:
+        print('ODLAU:\n' + '  '.join(odlau))
+
     odlau = odliadur(s, acennog_yn_unig=True)
-    print(odlau)
+    if odlau:
+        print('ODLAU ACENNOG:\n' + ' '.join(odlau))
+
+    odlau = odliadur(s, odl_lusg=True)
+    if odlau:
+        print('ODLAU LLUSG:\n' + ' '.join(odlau))
 
 
 if __name__ == '__main__':

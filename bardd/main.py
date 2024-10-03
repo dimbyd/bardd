@@ -3,14 +3,10 @@
 import os
 import re
 import sys
-# import csv
-# import time
 
-# import getopt
 from optparse import OptionParser
 
 from bardd.cysonion import geiriau_gwan
-from bardd.cysonion import llafariaid, cytseiniaid
 
 from bardd.gair import Gair
 from bardd.llinell import Llinell
@@ -25,24 +21,14 @@ from bardd.dilyswr_penillion import prawf_pennill
 
 from bardd.beiro import Beiro
 
+from bardd.settings import LOG_FILE_NAME
 from bardd.settings import DATABASES
 odlau_file = DATABASES['default']['ODLAU']        # json
 geirfa_file = DATABASES['default']['GEIRFA']      # txt
 
-from bardd.settings import LOG_FILE_NAME
 
-# from bardd.allbwn import (
-#     show_dadansoddiad_llinell,
-#     show_dadansoddiad_cwpled,
-#     show_dadansoddiad_pennill,
-# )
-
-
-
-class Efryd(object):
+class Efrydydd(object):
     '''
-    GPC: Astudiaeth, Myfyrdod.
-
     Mae angen opts ar gyfer:
     meddalu, caledu, odlau deheuol ayb
     '''
@@ -55,7 +41,7 @@ class Efryd(object):
         self.caledu = False
         self.beiro = Beiro()
 
-        logging.info('Efryd newydd.')
+        logging.info('Efrydydd newydd.')
 
     def __str__(self):
         return r'\n\n'.join([str(uned) for uned in self.unedau])
@@ -71,33 +57,33 @@ class Efryd(object):
         '''
         with open(infile) as f:
 
-            s0 = f.read()
-            s_unedau = s0.strip().split(r'\n\n')
+            str0 = f.read()
+            str_cerdd = str0.strip().split(r'\n\n')
             unedau = []
 
-            for su in s_unedau:
-                s_llinellau = su.strip().split('\n')
+            for str_pennill in str_cerdd:
+                str_llinellau = str_pennill.strip().split('\n')
                 llinellau = []
 
-                for s in s_llinellau:
+                for s in str_llinellau:
 
                     # anwybyddu sylwadau
                     if re.search(r'^#', s) or re.search(r'^\s*$', s):
                         continue
 
-                    # recordio
+                    # creu gwrthrych Llinell
                     llinell = Llinell(s)
                     seinegoli_fesul_sillaf(llinell, meddalu=True, caledu=True)
                     llinellau.append(llinell)
 
-                # recordio llinell unigol fel `Llinell`
+                # storio llinell unigol fel `Llinell`
                 if len(llinellau) == 1:
                     unedau.append(llinellau[0])
 
-                # fel arall, recordio `Pennill`
+                # fel arall, storio fel `Pennill`
                 else:
                     unedau.append(Pennill(llinellau))
-            
+
         return unedau
 
     def dadansoddwr(self, uned):
@@ -112,8 +98,9 @@ class Efryd(object):
             return prawf_pennill(uned, seinegol=self.seinegol)
 
         else:
-            raise TypeError('Mae angen `Llinell`, `Cwpled` neu `Pennill` fan hyn.')
-
+            msg = 'Mae angen `Llinell`, `Cwpled` neu `Pennill` fan hyn.'
+            raise TypeError(msg)
+        
     def treilliwr(self, s):
         '''
         Darganfod cynghanedd mewn rhyddiaith
@@ -169,7 +156,7 @@ class Efryd(object):
                         if dad.dosbarth and dad.dosbarth not in dim_diolch:
                             dads.append(dad)
 
-                    # # hidlo CBG a TBG 
+                    # # hidlo cynghanedd pengoll (CBG, TBG)
                     # dads2 = [dad for dad in dads2 if dad.dosbarth not in ['CBG', 'TBG']]
 
                     # # hidlo TRF, LLL, SAL
@@ -183,42 +170,11 @@ class Efryd(object):
 
         return dads
 
-    # def odliadur(self, qstr, odl_lusg=False, acennog=False):
-        
-    #     if not odl_lusg:
-    #         import json
-    #         with open(odlau_file, "r") as infile:
-    #             odliadur = json.load(infile)
-    #         if qstr in odliadur:
-    #             odlau = odliadur[qstr]
-    #             if acennog:
-    #                 odlau = [od for od in odlau if acennog(od)]
-    #             return odlau
-
-    #     import re
-    #     with open(geirfa_file) as f:
-    #         s = f.read()
-    #     llaf = '|'.join(llafariaid)
-    #     cyts = '|'.join(cytseiniaid)
-    #     if odl_lusg:
-    #         p = r'\b[a-z]*' + r'[' + cyts + r']+' + qstr + r'[' + llaf + r']+[' + cyts + ']*' + r'\b'
-    #     else:
-    #         # p = r'\b[a-z]*' + r'[' + cyts + r']+' + qstr + r'\b'
-    #         p = r'\b[a-z]*' + qstr + r'\b'
-
-    #     odlau = re.findall(p, s)
-    #     return odlau if odlau else None
-
-        # else:
-        #     import json
-        #     with open(odlau_file, "r") as infile:
-        #         od = json.load(infile)
-        #         print(od.keys())
-        #     return od[qstr] if qstr in od else None
-    
     def odliadur(self, qstr, odl_lusg=False, acennog_yn_unig=False):
         from bardd.celfi import odliadur
-        return odliadur(qstr, odl_lusg=odl_lusg, acennog_yn_unig=acennog_yn_unig)
+        return odliadur(qstr,
+                        odl_lusg=odl_lusg,
+                        acennog_yn_unig=acennog_yn_unig)
 
     def cleciadur(self, qstr):
         from bardd.celfi import cleciadur
@@ -245,7 +201,7 @@ def demo_penillion():
         'cywyddau/cywydd_clera.txt',
     ]
 
-    ef = Efryd()
+    ef = Efrydydd()
     for filename in filenames:
         infile = os.path.join(input_dir, filename)
         ef.read_unedau(infile)
@@ -273,31 +229,6 @@ def demo_penillion():
             print('Mae angen `Llinell` neu `Pennill` fan hyn.')
             continue
 
-def demo_treilliwr():
-
-#     import os
-#     dir_name = 'cronfa/rhyddiaith'
-#     input_dir = os.path.join(os.path.dirname(
-#         os.path.abspath(__file__)), dir_name)
-#     s_files = [
-#         'strategaeth.txt',
-#     ]
-
-#     ef = Efrydydd()
-#     dadansoddiadau = []
-
-#     for s_file in s_files:
-#         infile = os.path.join(input_dir, s_file)
-#         with open(infile) as f:
-#             s = f.read()
-#             dads = ef.treilliwr(s)
-#             dadansoddiadau.extend(dads)
-
-    # fancy
-    for dad in dadansoddiadau:
-        if dad.dosbarth:
-            print('----------------------------------------')
-            print(dad.fancy())
 
 def demo(verbose=False):
 
@@ -318,11 +249,6 @@ def demo(verbose=False):
             dads = prawf_llinell(llinell)
             # print([dad.dosbarth for dad in dads])
             
-            # if not dads:
-            #     print(llinell)
-            #     print(Beiro().coch('dim dadansoddiadau'))
-            #     break
-
             if not dads:
                 dad = Dadansoddiad(llinell)
             
@@ -356,28 +282,71 @@ def main(args=None):
     store_true means false by default (i.e. if unset)
     '''
     # dewisiadau
-    parser = OptionParser(usage="%prog [-v] [-q] [-d] [-p] [-r] [llinyn] [-i infile] [-o qstr]",
-                          version="%prog: fersiwn 0.1", add_help_option=False)
-    parser.add_option("--debug", dest="debug", action="store_true", help="debug mode")
-    parser.add_option("-v", "--verbose", dest="verbose", action="store_true", help="verbose")
-    parser.add_option("-q", "--quiet", dest="quiet", action="store_true", help="cryno")
-    parser.add_option("-p", "--profion", dest="profion", action="store_true", help="demo/test")
-    parser.add_option("-m", "--mewn", dest="mewn", help="ffeil utf-8")
-    parser.add_option("-o", "--odl", dest="odl", help="ymholiad (odliadur)")
-    parser.add_option("-c", "--clec", dest="clec", help="ymholiad (cleciadur)")
-    parser.add_option("-g", "--gair", dest="gair", help="ymholiad (chwiliadur)")
-    parser.add_option("-d", "--dadansoddwr", dest="dadansoddwr", action="store_false", help="dadansoddiad llinellau/cwpledi/penillion (default)")
-    parser.add_option("-t", "--treilliwr", dest="treilliwr", action="store_true", help="chwilio am gynghanedd mewn rhyddiaith")
-    parser.add_option("-l", "--lusg", dest="lusg", action="store_true", help="chwilio am odlau llusg")
-    parser.add_option("-a", "--acennog", dest="acennog", action="store_true", help="chwilio am eiriau acennog yn unig")
-    parser.add_option("-s", "--seinegol", dest="seinegol", action="store_true", help="mewnbwn seinegol (IPA)")
-    parser.add_option("-h", "--help", action="help", help="help")
+    parser = OptionParser(
+                usage="%prog [-v] [-q] [-d] [-p] [-r] [llinyn] [-i infile]",
+                version="%prog: fersiwn 0.1", add_help_option=False)
+    parser.add_option("--debug",
+                      dest="debug",
+                      action="store_true",
+                      help="debug mode")
+    parser.add_option("-v", "--verbose", 
+                      dest="verbose",
+                      action="store_true",
+                      help="verbose")
+    parser.add_option("-q", "--quiet",
+                      dest="quiet",
+                      action="store_true",
+                      help="cryno")
+    parser.add_option("-p", "--profion",
+                      dest="profion",
+                      action="store_true",
+                      help="demo/test")
+    parser.add_option("-m", "--mewn",
+                      dest="mewn",
+                      help="ffeil utf-8")
+    parser.add_option("-o", "--odl",
+                      dest="odl",
+                      help="odliadur")
+    parser.add_option("-c", "--clec",
+                      dest="clec",
+                      help="cleciadur")
+    parser.add_option("-g", "--gair",
+                      dest="gair",
+                      help="ymholiad chwiliadur")
+    parser.add_option("-d", "--dadansoddwr",
+                      dest="dadansoddwr",
+                      action="store_false",
+                      help="dadansoddiad llinellau/penillion (default)")
+    parser.add_option("-t", "--treilliwr",
+                      dest="treilliwr",
+                      action="store_true",
+                      help="chwilio am gynghanedd mewn rhyddiaith")
+    parser.add_option("-l", "--lusg",
+                      dest="lusg",
+                      action="store_true",
+                      help="chwilio am odlau llusg")
+    parser.add_option("-a", "--acennog",
+                      dest="acennog",
+                      action="store_true",
+                      help="chwilio am eiriau acennog yn unig")
+    parser.add_option("-s", "--seinegol",
+                      dest="seinegol",
+                      action="store_true",
+                      help="mewnbwn seinegol (IPA)")
+    parser.add_option("-h", "--help",
+                      action="help",
+                      help="help")
     # parser.set_defaults(verbose=False, demo=False, testun=False)
 
     logging.debug('Helo from debug (main.py)!')
 
     # prosesu opsiynnau
     (options, args) = parser.parse_args()
+
+    if len(sys.argv) == 1:
+        parser.print_help()
+        exit()
+
     input_str = ''
     if not args:
         args = sys.argv[1:]
@@ -385,7 +354,7 @@ def main(args=None):
         input_str = args[0]     # llinell unigol (utf-8)
 
     # init
-    ef = Efryd()
+    ef = Efrydydd()
     if options.seinegol:
         ef.seinegol = True
 
@@ -441,8 +410,7 @@ def main(args=None):
             print('------------------------------')
 
     # 4. Dadansoddi llinellau/penillion
-    # \n rhwng bob llinell
-    # \n\n rhwng bob pennill
+    # Mae angen \n rhwng bob llinell a \n\n rhwng bob pennill
     else:
         if options.mewn:
             with open(options.mewn) as f:
@@ -463,8 +431,6 @@ def main(args=None):
             dads = ef.dadansoddwr(llinell)
 
             # hidlo cynghanedd traws bengoll
-            # if len(dads) > 1:
-            # dads = [dad for dad in dads if dad.dosbarth not in ['CBG', 'TBG']]
             dads = [dad for dad in dads if dad.dosbarth not in ['TBG']]
 
             print('----------------------------------------')

@@ -1,6 +1,6 @@
 # __init__.py
-from llinell import Llinell
-from cwpled import Cwpled
-from pennill import Pennill
-from offer import odliadur
-from offer import cleciadur
+from bardd.llinell import Llinell
+from bardd.cwpled import Cwpled
+from bardd.pennill import Pennill
+from bardd.offer import odliadur
+from bardd.offer import cleciadur

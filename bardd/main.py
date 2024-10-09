@@ -5,6 +5,7 @@ import re
 import sys
 
 from optparse import OptionParser
+import logging
 
 from bardd.cysonion import geiriau_gwan
 

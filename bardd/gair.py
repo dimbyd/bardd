@@ -27,8 +27,7 @@ deusain_ddeusill = eithriadau['deusain_ddeusill']
 
 class Gair(TreeNode):
     """
-    Dosbarth i fynegi gair fel rhestr sillafau.
-    Base'n bosib gwneud rhai traswnewidiadau fan hyn, ond dim odlau cudd ayb.
+    Dosbarth sy'n mynegi gair fel rhestr sillafau.
     """
 
     def __init__(self, s=None, parent=None, trychben=False):
@@ -38,12 +37,16 @@ class Gair(TreeNode):
             return
 
         if not type(s) is str:
-            raise TypeError("Mae angen llinyn fel mewnbwn, nid {}".format(type(s)))
+            raise TypeError(
+                "Mae angen llinyn fel mewnbwn, nid {}".format(type(s))
+            )
 
-        # gwirio am linyn yn cynnwys bylchau
+        # profi am fylchau
         s = s.strip()
-        if re.search(r"\s", s):  # gwirio am fylchau
-            raise ValueError(f"Wedi methu creu `Gair` o'r llinyn {s} (bwlch/bylchau yn bresennol)")
+        if re.search(r"\s", s):
+            raise ValueError(
+                f"Wedi methu creu `Gair` o'r llinyn {s} (bwlch yn bresennol)"
+            )
 
         # profi am linyn gwag
         if not s:
@@ -81,7 +84,9 @@ class Gair(TreeNode):
 
             # Echdynnu llinyn y cnewyllyn, ond heb atalnodau,
             # er mwyn cael gwirio deuseiniaid
-            cnewyllyn = "".join([c for c in list(cnewyllyn) if c not in atalnodau])
+            cnewyllyn = ''.join(
+                [c for c in list(cnewyllyn) if c not in atalnodau]
+            )
 
             # anwybyddu atalnodau pur
             if len(cnewyllyn) == 0:
@@ -110,20 +115,18 @@ class Gair(TreeNode):
                 # print('cnewyllyn trisain: ', cnewyllyn)
                 # print('T: ', deuseiniaid['talgron'])
                 # print('LL: ', deuseiniaid['lleddf'])
+
                 # echdynnu deuseiniaid
-                cn = unidecode.unidecode(cnewyllyn)  # ascii
-                ds1 = cn[:2].lower()  # y ddeusain gyntaf
-                ds2 = cn[1:].lower()  # yr ail ddeusain
+                cnew = unidecode.unidecode(cnewyllyn)  # ascii
+                ds1 = cnew[:2].lower()  # y ddeusain gyntaf
+                ds2 = cnew[1:].lower()  # yr ail ddeusain
                 # print('(ds1, ds2) = ', (ds1, ds2))
 
                 # check
                 if ds1 not in dosbarth_deusain:
-                    # raise KeyError('Heb adnabod y ddeusain {}'.format(ds1))
                     print("Heb adnabod y ddeusain {}".format(ds1))
                     continue
-
                 if ds2 not in dosbarth_deusain:
-                    # raise KeyError('Heb adnabod y ddeusain {}'.format(ds2))
                     print("Heb adnabod y ddeusain {}".format(ds2))
                     continue
 
@@ -134,7 +137,7 @@ class Gair(TreeNode):
                         # print('trisain: LL+LL')
                         sillaf1 = Sillaf(cyrch, cnewyllyn[:2], "", parent=self)
                         sillaf2 = Sillaf("", cnewyllyn[2], coda, parent=self)
-                    
+
                     # lleddf + talgron
                     else:
                         # print('trisain: LL+T')
@@ -142,20 +145,15 @@ class Gair(TreeNode):
                         sillaf2 = Sillaf("", cnewyllyn[2], coda, parent=self)
 
                 if ds1 in deuseiniaid["talgron"]:
-                    
+
                     # talgron + talgron
-                    if ds2 in deuseiniaid["talgron"]:
+                    if ds2 in deuseiniaid["talgron"] and cnew[1] == "w":
                         # print('trisain: T+T')
-                        # hollti ar w-gytsain yn y canol
-                        if cn[1] == "w":
-                            sillaf1 = Sillaf(cyrch, cnewyllyn[:2], "", parent=self)
-                            sillaf2 = Sillaf("", cnewyllyn[2], coda, parent=self)
-                    
+                        sillaf1 = Sillaf(cyrch, cnewyllyn[:2], "", parent=self)
+                        sillaf2 = Sillaf("", cnewyllyn[2], coda, parent=self)
+
                     # talgron + lleddf e.e. iai = gweddiaid, iwy = bwriwyd
                     else:
-                        # print('trisain: T+LL')
-                        # sillaf1 = Sillaf(cyrch, cnewyllyn[:2], "", parent=self)
-                        # sillaf2 = Sillaf("", cnewyllyn[2], coda, parent=self)
                         pass
 
             # 4. cnewyllyn bedwarsain
@@ -172,7 +170,7 @@ class Gair(TreeNode):
             self.children.append(sillaf1)
             if sillaf2:
                 self.children.append(sillaf2)
-        
+
         # profi am eithriadau (hac)
         if str(self) in eithriadau['deusain_ddeusill']:
             for idx, sillaf in enumerate(self.children):
@@ -350,6 +348,8 @@ def main():
         "iaith",
         "gwaith",
         "genwair",
+        "gweddiaid", 
+        "bwriwyd",
         # triawd lleddf-talgron (LL-T)
         "awen",
         "distewi",

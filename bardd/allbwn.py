@@ -38,7 +38,13 @@ def show_llinyn_cytseinedd(dad, markup='plain', blank=' '):
         return None
 
     # dosbarthiadau mewn trefn (er mwyn lliwio)
-    nodau_cytseinedd = ['parau', 'traws', 'gwreiddgoll', 'trychben', 'cysylltben', 'cyswllt']
+    nodau_cytseinedd = ['parau',
+                        'traws',
+                        'gwreiddgoll',
+                        'trychben',
+                        'cysylltben',
+                        'cyswllt'
+                        ]
 
     # allbwn
     a = []
@@ -49,11 +55,14 @@ def show_llinyn_cytseinedd(dad, markup='plain', blank=' '):
 
         # cofnodi lleoliad acenion yr orffwysfa neu'r brifodl
         acenion = []
-        if gair == geiriau[-1] or ('gorffwysfa' in dad and gair in dad['gorffwysfa']):
+        if (
+            gair == geiriau[-1] or
+            ('gorffwysfa' in dad and gair in dad['gorffwysfa'])
+        ):
             acenion = gair.acenion()
 
         b = []
-        # dolennu dros y nodau
+        # iteru dros y nodau
         for nod in gair.nodau():
 
             # nodi lleoliad yr acenion
@@ -66,7 +75,10 @@ def show_llinyn_cytseinedd(dad, markup='plain', blank=' '):
                     if key not in dad['nodau_dethol']:
                         continue
                     elif key == 'parau':
-                        nodau = [nod2 for par in dad['nodau_dethol'][key] for nod2 in par]
+                        nodau = [nod2
+                                 for par in dad['nodau_dethol'][key]
+                                 for nod2 in par
+                                 ]
                     else:
                         nodau = dad['nodau_dethol'][key]
 
@@ -78,7 +90,7 @@ def show_llinyn_cytseinedd(dad, markup='plain', blank=' '):
                         found = True
                         break
 
-                # replace others by blanks
+                # newid pob llythyren arall am 'blank'
                 if not found:
                     b.append(blank * len(nod.text))
 
@@ -113,7 +125,7 @@ def show_dadansoddiad_llinell(dad, verbose=False):
 
     # type check
     if not (type(dad) is dict):
-        raise ValueError('Mae angen `dict`  fan hyn.')
+        raise ValueError('Mae angen `dict` fan hyn.')
     if 'llinell' not in dad.keys():
         raise ValueError('Mae angen dadansoddiad llinell fan hyn.')
 
@@ -170,10 +182,12 @@ def show_dadansoddiad_cwpled(dad, verbose=False):
         s.append(cyan(dad['dosbarth']))
     else:
         s.append(coch('XXX'))
+
     if verbose:
         for key in ['dosbarth', 'nodau_soniarus', 'dad_cyntaf', 'dad_ail']:
             if key in dad and dad[key]:
                 print('{} : {}'.format(key, str(dad[key])))
+
     s.append(sep)
     return '\n'.join(s)
 

@@ -38,13 +38,9 @@ def prawf_odl(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
     input y: `Gair` unigol, neu tuple (`Gair`, `Gair`)
     output: dosbarth odl
 
-    odlau cudd:benthyg cytsain gyntaf y gair olynol i wneud odl
-
+    odlau cudd: benthyg cytsain/cytseiniaid cyntaf y gair 
+    olynol i greu odl
     """
-
-    # type check
-    # if not type(x) is Gair or (type(x) is tuple and type(x[0]) is Gair and type(x[1] is Gair)):
-    #     raise ValueError("Rhaid cael `Gair`, neu `tuple(Gair,Gair)` fan hyn.")
 
     # init
     dad = Dadansoddiad()
@@ -59,7 +55,7 @@ def prawf_odl(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
         y_olynydd = y[1]
         y = y[0]
 
-    # Type check
+    # type check
     if type(x) is not Gair:
         raise TypeError("Mae angen Gair fan hyn, nid {}".format(type(x)))
     if type(y) is not Gair:
@@ -89,12 +85,13 @@ def prawf_odl(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
     # print(f'de {x_sill_olaf}, {y_sill_olaf}')
 
     # prawf sylfaenol
-    dad = prawf_odl_sylfaenol(x_sill_olaf, y_sill_olaf, odl_lusg=odl_lusg, trwm_ac_ysgafn=trwm_ac_ysgafn)
+    dad = prawf_odl_sylfaenol(x_sill_olaf, y_sill_olaf,
+                              odl_lusg=odl_lusg, trwm_ac_ysgafn=trwm_ac_ysgafn)
 
-    # dychwelyd os llwyddiant
+    # dychwelyd os oes llwyddiant
     if dad.dosbarth in ['OGY', 'OLA', 'OLU', 'OLL']:
         return dad
-    
+
     # chwilio am gollnod ar y diwedd: a'r, i'm, ayb
     xcn = x_sill_olaf.cnewyllyn().children
     # print('xso = ', x_sill_olaf, '; yso = ', y_sill_olaf, '; xcn = ', xcn)
@@ -111,10 +108,9 @@ def prawf_odl(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
         xco = x_sill_olaf.coda()
         xco_kids = xco.children
         xco.children = []
-        # print('xs_newydd: ', repr(x_sill_newydd))
-        # dad = prawf_odl_sylfaenol(x_sill_newydd, y_sill_olaf, odl_lusg=odl_lusg, trwm_ac_ysgafn=trwm_ac_ysgafn)
-        # print('xcnew: ', repr(x_sill_olaf.cnewyllyn()))
-        dad = prawf_odl_sylfaenol(x_sill_olaf, y_sill_olaf, odl_lusg=odl_lusg, trwm_ac_ysgafn=trwm_ac_ysgafn)
+        dad = prawf_odl_sylfaenol(x_sill_olaf, y_sill_olaf,
+                                  odl_lusg=odl_lusg,
+                                  trwm_ac_ysgafn=trwm_ac_ysgafn)
         xcn.append(atalnod)
         xco.children = xco_kids
         if dad.dosbarth in ['OGY', 'OLA', 'OLU', 'OLL']:
@@ -133,8 +129,6 @@ def prawf_odl(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
         # print('xs_newydd: ', repr(x_sill_newydd))
         # print('ycnew: ', repr(y_sill_olaf.cnewyllyn()))
         dad = prawf_odl_sylfaenol(x_sill_olaf, y_sill_olaf, odl_lusg=odl_lusg, trwm_ac_ysgafn=trwm_ac_ysgafn)
-        # dad = prawf_odl_sylfaenol(x_sill_olaf, y_sill_newydd, odl_lusg=odl_lusg, trwm_ac_ysgafn=trwm_ac_ysgafn)
-        # ycn.append(atalnod)
         ycn.append(atalnod)
         yco.children = yco_kids
         if dad.dosbarth in ['OGY', 'OLA', 'OLU', 'OLL']:
@@ -150,7 +144,7 @@ def prawf_odl(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
     y_olynydd_sill_cyntaf = None
     if y_olynydd and y_olynydd.children:
         y_olynydd_sill_cyntaf = y_olynydd.children[0]  # sain yn unig
-            
+
     # print('xolynydd_sill_cyntaf = ', x_olynydd_sill_cyntaf)
     # print('yolynydd_sill_cyntaf = ', y_olynydd_sill_cyntaf)
 
@@ -229,14 +223,13 @@ def prawf_odl_sylfaenol(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
     #
     # Os nad yw'r ddau yn cyfateb, does dim odl.
     #
-    # 
     # x_coda_str = "".join([nod.text for nod in x_coda])
     # y_coda_str = "".join([nod.text for nod in y_coda])
     x_coda_str = "".join([nod.sain for nod in x_coda])
     y_coda_str = "".join([nod.sain for nod in y_coda])
-    
+
     # print('xcs = ', x_coda_str, '; ycs = ', y_coda_str)
-    
+
     if x_coda_str and y_coda_str and x_coda_str != y_coda_str:
         return dad
     if (not x_coda_str and y_coda_str) or (x_coda_str and not y_coda_str):
@@ -252,7 +245,6 @@ def prawf_odl_sylfaenol(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
     # else:
     #     x_cnew = Cyfres([nod.byr() for nod in x.cnewyllyn().llafariaid()])
     #     y_cnew = Cyfres([nod.byr() for nod in y.cnewyllyn().llafariaid()])
-
 
     # Talfyrru cnewyll trisain ()
     if len(x_cnew) > 2:
@@ -285,7 +277,7 @@ def prawf_odl_sylfaenol(x, y, odl_lusg=False, trwm_ac_ysgafn=False):
 
     # print('xstr = ', x_str, '; ystr = ', y_str)
 
-    # llimanau
+    # baneri
     odl = False
     proest = False
 

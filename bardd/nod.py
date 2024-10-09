@@ -1,9 +1,6 @@
 """
 nod.py
-    Creu a thrafod rhestri nodau:
-    Llinyn: cyfres o symbolau utf-8
-    Nod: llythren yn cynnwys deugraffau 
-    (e.e. ch, dd, ll) neu atalnod/gofod/ayb
+    Nod: llythren (yn cynnwys deugraffau), gofod neu atalnod
 """
 from bardd.base import TreeNode
 from bardd.cysonion import \
@@ -16,7 +13,7 @@ log = logging.getLogger(__name__)
 
 class Nod(TreeNode):
     """
-    Dosbarth i ddarlunio llythyren, atalnod neu gofod unigol.
+    Dosbarth i ddarlunio llythyren, gofod neu atalnod unigol.
     """
 
     def __init__(self, s=None, parent=None):

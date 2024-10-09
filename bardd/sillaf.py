@@ -110,8 +110,8 @@ log = logging.getLogger(__name__)
 
 class Sillaf(TreeNode):
     """
-    Sillaf.
-    Rhestr mewn trefn o dri `Cyfres`: cyrch, cnewyllyn a coda.
+    Rhestr trefnedig o dri gwrthrych `Cyfres`:
+        [cyrch, cnewyllyn, coda]
     """
 
     def __init__(self, cyrch="", cnewyllyn="", coda="", parent=None):

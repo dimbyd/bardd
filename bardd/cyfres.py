@@ -1,6 +1,6 @@
 # cyfres.py
 """
-Cyfres nodau (rhestr nodau).
+Dosbarth i fynegi cyfres o nodau.
 """
 
 from bardd.base import TreeNode
@@ -12,8 +12,8 @@ log = logging.getLogger(__name__)
 
 class Cyfres(TreeNode):
     """
-    Cyfres yw dilyniant o nodau o'r un dosbarth (llafariaid neu cytseiniaid)
-    Gall atalnodau ymddangos yn yn ddau fath
+    Cyfres o nodau yn cynnwys atalnodau
+    Caiff deugraffau eu prosesu yma
     """
 
     def __init__(self, s="", parent=None):
@@ -39,6 +39,7 @@ class Cyfres(TreeNode):
             self.children = []
             idx = 0
             while idx < len(s):
+                
                 # echdynn'r symbol (unicode)
                 c = s[idx]
 

@@ -10,7 +10,7 @@ Cyhydedd nawban:        CYN = [CNS,CNS]             # pob llinell yn nawsill ac 
 Cyhydedd fer:           CYF = [CWS,CWS]             # pob llinell yn wythsill ac yn odli
 Cyhydedd hir:           CYH = [CCH,CCH[,CCH,...]]   # pob llinell yn odli
 Gwawdodyn byr:          GWB = [CNS,TOD]             # pob llinell yn odli
-Gwawdodyn hir:          GWH = [CNS,CNS,TOD]         # pob llinell yn odli, dim cynghanedd lusg yn y llinell olaf
+Gwawdodyn hir:          GWH = [CNS,CNS,TOD]         # pob llinell yn odli, dim lusg yn yr olaf
 Hir a thoddaid:         HAT = [CDS,CDS[,CDS],TOH]   # pob llinell yn odli
 '''
 

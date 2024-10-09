@@ -19,9 +19,6 @@ class TreeNode(object):
         self.parent = parent
         self.children = []
 
-    def species(self):
-        return self.__class__.__name__.lower()
-
     def __str__(self):
         return "".join([str(child) for child in self.children])
 
@@ -29,7 +26,7 @@ class TreeNode(object):
         return "".join([repr(child) for child in self.children])
 
     def xml(self):
-        element_name = self.species()
+        element_name = self.__class__.__name__.lower()
         element = etree.Element(element_name)
 
         # recursive call
@@ -45,8 +42,6 @@ class TreeNode(object):
 
 
 # ------------------------------------------------
-
-
 def main():
     node = TreeNode()
     child = TreeNode()

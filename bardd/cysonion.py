@@ -140,17 +140,27 @@ llythrennau = cytseiniaid + llafariaid
 # deuseuniaid
 # ------------------------------------------------
 deuseiniaid = {
-    "talgron": ["ia", "ie", "io", "iw", "iy", "wa", "we", "wi", "wo", "ua", "yu"],
+    "talgron": ["ia", "ie", "io", "iw", "iy",
+                "wa", "we", "wi", "wo", "ua", "yu"],
+
     "lleddf_cyntaf": ["aw", "ew", "ow", "uw", "yw"],
+
     "lleddf_ail": ["ae", "ai", "ei", "oe", "oi", "wy"],
+
     "lleddf_trydydd": ["au", "eu", "ou", "ey", "oy"],
+
     "deusill": ["uo", "eo", "ea", "oa", "ee", "ao"],
-    "eraill": ["ay", "ue", "ya", "uy", "yu", "ye", "yo", "wu", "oo", "aa", "iu", "yy", "ui"],
+
+    "eraill": ["ay", "ue", "ya", "uy", "yu", "ye",
+               "yo", "wu", "oo", "aa", "iu", "yy", "ui"],
 }
+
 dosbarth_deusain = dict(
     [(z, key) for key in deuseiniaid.keys() for z in deuseiniaid[key]]
 )
-deuseiniaid["lleddf"] = deuseiniaid["lleddf_cyntaf"] + deuseiniaid["lleddf_ail"] + deuseiniaid["lleddf_trydydd"]
+deuseiniaid["lleddf"] = deuseiniaid["lleddf_cyntaf"]
+deuseiniaid["lleddf"] += deuseiniaid["lleddf_ail"]
+deuseiniaid["lleddf"] += deuseiniaid["lleddf_trydydd"]
 
 # ------------------------------------------------
 # llythrenwau
@@ -447,7 +457,7 @@ eithriadau = {
         "gweddiwn", "weddiwn",
         "diod", "ddiod",
         "diodydd", "ddiodydd",
-        "piod", "p" 
+        "piod", "biod",
         "priod", "briod", "phriod",
         "priodfab", "briodfab", "phriodfab",
         "priodferch", "briodferch", "phriodferch",
@@ -503,4 +513,3 @@ eithriadau = {
         'bedw',
     )
 }
-

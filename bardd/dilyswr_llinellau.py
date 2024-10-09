@@ -37,8 +37,8 @@ def prawf_cynghanedd_gytsain(geiriau):
     Mewnbwn: Rhestr geiriau
     Allbwn:  Dadansoddiad (dict)
 
-    Mae'r weithdrefn yma yn derbyn rhestr geiria ac yn profi pob safle 
-    posib am orffwysfa.
+    Mae'r weithdrefn yma yn derbyn rhestr geiriau ac yn 
+    profi pob safle posib am orffwysfa.
     """
 
     dad = Dadansoddiad()
@@ -49,7 +49,7 @@ def prawf_cynghanedd_gytsain(geiriau):
     prifodl = y_geiriau[-1]  # gair olaf
     nifer_sillafau = 0
 
-    # oes_gorffwysfa ar ol? (Chwith -> Dde)
+    # oes_gorffwysfa ar ol? (o'r chwith i'r dde)
     while y_geiriau:
 
         nesaf = y_geiriau.pop(0)  # pop o'r blaen
@@ -149,6 +149,7 @@ def prawf_croesdraws(x1, x2):
 #     if dad.dosbarth in ["TRA", "TRF", "TRG", "TRD"]:
 #         return dad
 #     return None
+
 
 def prawf_llusg(x1, x2):
 
@@ -281,12 +282,11 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
         if str(x1[-1]).lower() in geiriau_gwan:
             continue
 
-        #--------------------
+        # --------------------
         # 1. Profi am gynghanedd gytsain
-        dad_cyts12= prawf_cytseinedd(x1, x2)
+        dad_cyts12 = prawf_cytseinedd(x1, x2)
 
         if dad_cyts12.dosbarth:  # llwyddiant
-            # if dad_cyts12:  # llwyddiant
 
             # creu dadansoddiad newydd
             dad = Dadansoddiad(llinell)
@@ -294,7 +294,7 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
             # dosbarth cytseinedd
             dad.dosbarth = dad_cyts12.dosbarth
 
-            # atodi'r ddadansoddiad cytseinedd
+            # atodi'r dadansoddiad cytseinedd
             dad.cytseinedd = dad_cyts12
             dad.gwallau += dad_cyts12.gwallau
 
@@ -321,7 +321,7 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
             else:
                 dads.append(dad)  # cofnodi'r dadansoddiad
 
-        #--------------------
+        # --------------------
         # 2. Profi am gynghanedd lusg
         dad_odl = prawf_odl((x1[-1], x2[0]), x2[-1], odl_lusg=True, trwm_ac_ysgafn=True)
         if dad_odl and dad_odl.dosbarth in ["OLU", "OLL"]:
@@ -332,7 +332,7 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
             # print('dad_llusg = ', dad_odl)
             dads.append(dad)
 
-        #--------------------
+        # --------------------
         # 3. Dwy orffwysfa: cynghanedd sain neu lusg deirodl
 
         # iteru dros safleoedd posib yr ail orffwysfa (x1 heb newid)
@@ -356,7 +356,7 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
 
             if dad_odl12 and dad_odl12.dosbarth in ["OGY", "OLA"]:
 
-                # 3A sain: profi am gytseinedd rhwng yr ail a'r drydedd ran
+                # 3a sain: profi am gytseinedd rhwng yr ail a'r drydedd ran
                 dad_cyts23 = prawf_cytseinedd(x2, x3)
                 # print(x2, x3)
                 # print("dad_cyts23: ", dad_cyts23.dosbarth)
@@ -385,7 +385,7 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
                     # print('*** dad.dosbarth ***: ', dad.dosbarth)
                     dads.append(dad)
 
-                # 3B llusg deirodl:
+                # 3b llusg deirodl:
                 # profi am odl lusg rhwng yr ail a'r drydedd ran
                 dad_odl23 = prawf_odl((x2[-1], x3[0]), x3[-1], odl_lusg=True)
 
@@ -399,7 +399,7 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
                     
                     dads.append(dad)
             
-            #--------------------
+            # --------------------
             # 4. Pedair rhan: sain gadwynog a sain deirodl
 
             # iteru dros safleoedd posib y drydedd orffwysfa (x1 a x2 heb newid)
@@ -417,7 +417,7 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
                 if str(x3[-1]) in geiriau_gwan:
                     continue
 
-                #--------------------
+                # --------------------
                 # 4a Sain gadwynog
                 #  un prawf odl: [x1, x3], un prawf cytseinedd: [x2, x4]
 
@@ -437,8 +437,8 @@ def prawf_llinell(llinell, min_sillafau=4, max_sillafau=10, trwm_ac_ysgafn=False
                         dad.gorffwysfeydd = (x1[-1], x2[-1], x3[-1])
                         dads.append(dad)
 
-                #--------------------
-                # 4a sain deirodl (TODO: cudd am yr ail orffwysfa)
+                # --------------------
+                # 4b sain deirodl (TODO: cudd am yr ail orffwysfa)
                 # odl rhwng x1 a x2, odl rhwng x2 a x3, cytseinedd rhwng x3 a x4
                 dad_odl12 = prawf_odl((x1[-1], x2[0]), x2[-1])
                 dad_odl23 = prawf_odl((x2[-1], x3[0]), x3[-1])

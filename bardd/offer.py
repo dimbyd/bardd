@@ -278,14 +278,17 @@ def main():
 
     s = 'afiach'
 
+    # odlau cyffredin
     odlau = odliadur(s)
     if odlau:
         print('ODLAU:\n' + '  '.join(odlau))
 
+    # odlau acennog yn unig
     odlau = odliadur(s, acennog_yn_unig=True)
     if odlau:
         print('ODLAU ACENNOG:\n' + ' '.join(odlau))
 
+    # odlau llusg
     odlau = odliadur(s, odl_lusg=True)
     if odlau:
         print('ODLAU LLUSG:\n' + ' '.join(odlau))

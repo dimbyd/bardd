@@ -104,11 +104,6 @@ def main():
             print(ll.llinyn_cytseiniaid())
             print(ll.sain())
             print()
-        # try:
-        #     input(">> bwrwch y dychwelwr i barhau ...")
-        # except KeyboardInterrupt:
-        #     print("Beth?")
-        #     return
 
 
 if __name__ == "__main__":

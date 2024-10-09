@@ -16,7 +16,7 @@ def aceniad(g1, g2):
     '''
     ffwythiant:	darganfod dosbarth aceniad dau air
     mewnbwn:	dau air (yr orffwysfa a'r brifodl)
-    allbwn:		llythrenw dosbarth aceniad (CAC,CDI,ADI,ADY)
+    allbwn:		llythrenw dosbarth aceniad (CAC,CDI,AAC,ADI)
     '''
     if g1.is_acennog():
         if g2.is_acennog():

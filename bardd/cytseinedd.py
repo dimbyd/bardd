@@ -630,13 +630,9 @@ def main():
             print(s_acenion)
             print("{} | {}".format(s1, s2))
             print(s_cytseiniaid)
-            # sx = ' | '.join([repr(sill) for gair in x_geiriau for sill in gair.children])
-            # sy = ' | '.join([repr(sill) for gair in y_geiriau for sill in gair.children])
-            # print('{} | {}'.format(sx, sy))
 
-            # print('x_geiriau: {}'.format(x_geiriau))
-            # print('y_geiriau: {}'.format(y_geiriau))
             seinegoli_fesul_sillaf(x_geiriau + y_geiriau)
+
             print('x_geiriau: {}'.format(x_geiriau))
             print('y_geiriau: {}'.format(y_geiriau))
 
@@ -676,17 +672,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    # # one-offs
-    # x, y = ("Rhwydd gamwr,", "hawdd ei gymell")
-    # # x, y = ('na glaw;', 'does dim drws ar glo')
-    # # x, y = ("i ennill", "syn anodd")
-    # xG = [Gair(s) for s in x.split(" ")]
-    # yG = [Gair(s) for s in y.split(" ")]
-    # print(x + " " + y)
-    # dad = oes_cytseinedd(xG, yG, traws=True)
-    # # for key in dad:
-    # #     print("{} : {}".format(key, repr(dad[key])))
-    # print(dad.dosbarth)
-    # print(dad.hysbys)
-    # print(dad.nodau)

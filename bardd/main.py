@@ -172,13 +172,13 @@ class Efrydydd(object):
         return dads
 
     def odliadur(self, qstr, odl_lusg=False, acennog_yn_unig=False):
-        from bardd.celfi import odliadur
+        from bardd.offer import odliadur
         return odliadur(qstr,
                         odl_lusg=odl_lusg,
                         acennog_yn_unig=acennog_yn_unig)
 
     def cleciadur(self, qstr):
-        from bardd.celfi import cleciadur
+        from bardd.offer import cleciadur
         return cleciadur(qstr)
 
 

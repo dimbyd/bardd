@@ -1,4 +1,4 @@
-# celfi.py
+# offer.py
 '''
 1. odliadur (regex)
 2. cleciadur (regex)
